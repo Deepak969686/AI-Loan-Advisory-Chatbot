@@ -103,7 +103,7 @@ AI-Loan-Advisory-Chatbot
 ├── README.md
 ├── .env.example
 ├── .gitignore
-└── LICENSE (optional)
+└── LICENSE 
 ```
 
 ---
