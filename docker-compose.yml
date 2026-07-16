@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build: .
+    container_name: ai-loan-backend
+
+    command: >
+      uvicorn backend.main:app
+      --host 0.0.0.0
+      --port 8000
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - .:/app
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
+
+  frontend:
+
+    build: .
+
+    container_name: ai-loan-frontend
+
+    command: >
+      streamlit run frontend/app.py
+      --server.address=0.0.0.0
+      --server.port=8501
+
+    ports:
+      - "8501:8501"
+
+    volumes:
+      - .:/app
+
+    depends_on:
+      - backend
+
+    env_file:
+      - .env
+
+    restart: unless-stopped
