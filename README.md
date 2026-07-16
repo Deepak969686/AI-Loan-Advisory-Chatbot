@@ -88,8 +88,13 @@ AI-Loan-Advisory-Chatbot
 │   ├── api.py
 │   └── __init__.py
 │
-├── documents
+├── tests
+│   ├── test_api.py
+│   ├── test_chatbot.py
+│   ├── test_loan.py
+│   └── test_pdf.py
 │
+├── documents
 ├── chroma_db
 │
 ├── Dockerfile
@@ -97,7 +102,8 @@ AI-Loan-Advisory-Chatbot
 ├── requirements.txt
 ├── README.md
 ├── .env.example
-└── .gitignore
+├── .gitignore
+└── LICENSE (optional)
 ```
 
 ---
