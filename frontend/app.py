@@ -106,50 +106,72 @@ tab_chat, tab_calc = st.tabs(["💬 AI Loan Assistant", "🧮 EMI Calculator"])
 # TAB 1: AI Chat Section
 # -----------------------------------------------
 with tab_chat:
-    
+
+    # ==============================
     # Display Chat History
+    # ==============================
+
     for message in st.session_state.messages:
+
         with st.chat_message(message["role"]):
+
             st.markdown(message["content"])
-            
-            # Display sources if available and not empty
-            if message["role"] == "assistant" and message.get("sources"):
+
+            if (
+                message["role"] == "assistant"
+                and message.get("sources")
+            ):
+
                 with st.expander("📄 View Sources"):
+
                     for source in message["sources"]:
-                        st.write(f"- **{source['source']}** (Page {source['page']})")
 
-    # Chat Input
-    if question := st.chat_input("Ask any loan-related question here..."):
-        
-        # Display User Message
-        st.session_state.messages.append({"role": "user", "content": question})
-        with st.chat_message("user"):
-            st.markdown(question)
+                        st.write(
+                            f"**{source['source']}** (Page {source['page']})"
+                        )
 
-        # Display Assistant Message
-        with st.chat_message("assistant"):
-            with st.spinner("Analyzing documents..."):
-                response = LoanAPI.chat(question)
-                
-            answer = response.get("answer", "I couldn't find an answer.")
-            sources = response.get("sources", [])
+    # ==============================
+    # Chat Input (Always at Bottom)
+    # ==============================
 
-            st.markdown(answer)
+    if question := st.chat_input(
+        "Ask any loan-related question here..."
+    ):
 
-            if sources:
-                with st.expander("📄 Sources Used"):
-                    for source in sources:
-                        st.write(f"- **{source['source']}** (Page {source['page']})")
-            else:
-                st.info("No specific source documents were used for this answer.")
+        # Save User Message
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "content": question
+            }
+        )
 
-        # Save Assistant Message to State
-        st.session_state.messages.append({
-            "role": "assistant",
-            "content": answer,
-            "sources": sources
-        })
+        # Call Backend
+        with st.spinner("Analyzing documents..."):
 
+            response = LoanAPI.chat(question)
+
+        answer = response.get(
+            "answer",
+            "I couldn't find an answer."
+        )
+
+        sources = response.get(
+            "sources",
+            []
+        )
+
+        # Save Assistant Message
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "content": answer,
+                "sources": sources
+            }
+        )
+
+        # Refresh page so new messages appear
+        st.rerun()
 # -----------------------------------------------
 # TAB 2: EMI Calculator
 # -----------------------------------------------
