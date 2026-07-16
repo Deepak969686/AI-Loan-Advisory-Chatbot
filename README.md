@@ -296,9 +296,9 @@ B.Tech CSE (Artificial Intelligence)
 
 AI/ML | Generative AI | Python | FastAPI | LangChain
 
-GitHub: https://github.com/YOUR_USERNAME
+GitHub: https://github.com/Deepak969686
 
-LinkedIn: https://linkedin.com/in/YOUR_PROFILE
+LinkedIn: https://linkedin.com/in/deepakkumarji
 
 ---
 
